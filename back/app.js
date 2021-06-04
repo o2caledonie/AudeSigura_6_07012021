@@ -3,11 +3,19 @@ const bodyParser = require('body-parser'); //Extracts JSON object from POST requ
 const mongoose = require('mongoose'); //Plugin Mongooose to connect to MongoDB database
 const path = require('path'); //Plugin to upload images and manage files paths access
 const helmet = require('helmet'); //Node.js module that helps in securing HTTP headers
+const rateLimit = require("express-rate-limit"); //Use to limit repeated requests to public APIs and/or endpoints such as password reset.
 
-const saucesRoutes = require('./routes/sauces'); 
+require('dotenv').config();
+
+const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
-mongoose.connect('mongodb+srv://o2caledonie:WjgjWxuzzdxWdJ42@cluster0.7p67r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100 // limit each IP to 100 requests per windowMs
+});
+
+mongoose.connect(process.env.DB_URI,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -18,6 +26,8 @@ mongoose.connect('mongodb+srv://o2caledonie:WjgjWxuzzdxWdJ42@cluster0.7p67r.mong
 const app = express();
 
 app.use(helmet()); //sets up various HTTP headers to prevent attacks like Cross-Site-Scripting(XSS), clickjacking, etc.
+
+app.use(limiter); //  apply to all requests
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*'); //API access from all origins
