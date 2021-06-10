@@ -23,6 +23,7 @@ exports.signup = (req, res, next) => {
                     email: cryptoJs.SHA256(req.body.email, process.env.RANDOM_KEY_SECRET).toString(),
                     password: hash
                 });
+                console.log("ok");
                 user.save()
                     .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
                     .catch(error => res.status(400).send(error));
