@@ -22,6 +22,10 @@ Javascript
 ### Prerequisites ###
 
 You will need to have SASS, Node and `npm` installed locally on your machine.
+Install :
+NodeJS: version 14.16. 
+Angular CLI : version 7.0.2.
+node-sass : version 4.14+.
 
 ### Installation ###
 
@@ -39,3 +43,7 @@ From within the "back" directory:
 1) run `npm install`
 2) run `npm install -g nodemon` to install SASS.
 3) run `nodemon server`. The server should listen on port 3000.
+4) create a .env file with the following environment variables :
+DB_URI = "mongodb+srv://Collection-Administrator:oKLKKxpwHAKug4yF@cluster0.7p67r.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+APP_SECRET_TOKEN = "cVtha@d6Fv^*dtV!"
+RANDOM_KEY_SECRET = "QWch8&7DwHRq?sBx"
